@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html>
+
+<!--
+	Copyright 2008 Kevin Timmerman
+	mmpi2008 [@t] compendiumarcana [d0t] com
+
+	This program is for educational use only.
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see http://www.gnu.org/licenses/.
+-->
+
+
+<!-- Adaptation de MMPI 2008 au SCQ de Laurent Mottron et al par Benoit Anastay -->
+
+<head>
+
+<title>SCQ/AAA Auto Scoring</title>
+
+</head>
+
+<body>
+
+<script type="text/javascript">
+
+// Tell JSLint about intentional global variables
+/*global questions, scales, rin, longform, gender, ans */
+
+// Test questions
+questions=[
+	// 0 - Description
+	"SCQ",
+	// 1
+	"Êtes-vous capable d’utiliser quelques mots ou des phrases courtes ?",
+"Pouvez-vous avoir avec les autres des conversations avec des échanges où vous prenez votre tour de parole ou bien où vous développez la conversation à partir de ce qu’on vous a dit ?",
+"Utilisez-vous des phrases bizarres ou bien répétez-vous la même chose exactement de la même manière et sans cesse ? Cela peut être des phrases que vous avez entendues prononcer par d’autres personnes ou des expressions que vous avez construites vous-même.",
+"Utilisez-vous assez régulièrement des propositions ou des questions qui sont socialement inappropriées, maladroites ? Par exemple, poser des questions personnelles ou faire des commentaires gauches à des moments inopportuns.",
+"Vous arrive-t-il de mal utiliser les pronoms personnels ? Par exemple, dire « tu » ou « il » à la place de « je ».",
+"Utilisez-vous des mots inventés ou construits par vous-même ou vous arrive-t-il de vous exprimer d’une façon étrange, indirecte, métaphorique (par exemple dire « pluie chaude » au lieu de dire « vapeur » ?) (En utilisant de manière répétée le mot ou la phrase inventée à la place de l’expression habituelle).",
+"Vous arrive-t-il de répéter sans cesse la même chose, toujours dans le même ordre ou bien d’insister pour qu’on vous répète sans cesse les mêmes choses ?",
+"Avez-vous déjà utilisé la main de quelqu’un d’autre comme un outil ou comme une partie de votre corps (par exemple, mettre la main de quelqu’un d’autre sur la poignée de la porte pour l’ouvrir) ?",
+"Vous arrive-t-il de parler à quelqu’un pour être affectueux ou pour faire plaisir, et non pas pour obtenir quelque chose ?",
+"Avez-vous quelques amis identifiés ou bien un très bon ami ?",
+"Pourriez-vous dire qu’habituellement, l’expression de votre visage vous paraît adaptée à la situation que vous vivez ?",
+"Avez-vous des activités, des rituels, que vous devez exécuter ou que vous imposez aux autres, dans un ordre précis ou d’une façon particulière ? (Par exemple, toucher quelque chose de particulier ou placer des objets d’une certaine façon avant de passer à une autre activité ?)",
+"Avez-vous des intérêts qui pourraient paraître bizarres pour les autres personnes ce qui vous préoccupe plus que la moyenne des gens (par exemple, intérêt pour les horaires de train, fascination pour les feux de circulation) ? ",
+"Est-ce que vous êtes plutôt intéressé par une certaine partie d’un objet (ex : ouvrir/fermer les portes d’une auto, faire tourner les roues d’une voiture) plutôt que d’utiliser l’objet tel que prévu ? ",
+"Avez-vous des intérêts spéciaux d’une intensité inhabituelle, mais autrement normaux pour votre âge ? ",
+"Êtes-vous intéressé d’une manière inhabituelle par le son, le goût, l’odeur ou la texture de certaines choses ou d’autres personnes ? ",
+"Avez-vous des maniérismes ou des mouvements bizarres avec vos mains ou avec vos doigts, comme bouger vos doigts devant vos yeux ? ",
+"Vous arrive-t-il d’exécuter des mouvements étranges, anormaux et répétitifs de votre corps (par exemple, tourner sur vous même, sautiller de manière répétée, agiter les bras pendant que vous vous balancez, battre des mains, etc.) ?",
+"Est-ce que vous pouvez vous faire du mal délibérément, en vous mordant les bras, en vous frappant la tête contre les murs etc. ?",
+"Avez-vous un ou plusieurs objets qu’il vous faut absolument traîner avec vous ?",
+"Lorsque vous aviez 4-5 ans, est-ce que vous imitiez spontanément les autres personnes ou leurs activités (exemple : passer l’aspirateur, jardiner) ?",
+"Lorsque vous aviez 4-5 ans, est-ce que vous indiquiez du doigt des choses autour de vous, juste pour les montrer (et non pour qu’on vous les apporte) ?",
+"Lorsque vous aviez 4-5 ans, quand vous faisiez des choses avec une autre personne, est-ce que vous la regardiez directement en face ?",
+"Lorsque vous aviez 4-5 ans, est-ce que vous souriez en réponse à un sourire qui vous était adressé ?",
+"Lorsque vous aviez 4-5 ans, est-ce que vous montriez des objets à d’autres personnes pour partager votre intérêt avec eux et non pas pour demander de l’aide ?",
+"Lorsque vous aviez 4-5 ans, est-ce que vous offriez parfois de partager quelque chose d’autre que de la nourriture avec les autres ? ",
+"Lorsque vous aviez 4-5 ans, vous arrivait-il souvent de vouloir partager votre joie avec d’autres personnes ?",
+"Lorsque vous aviez 4-5 ans, est-ce que vous tentiez de réconforter un autre enfant ou une autre personne, triste ou blessée ?",
+"Lorsque vous aviez 4-5 ans, quand vous voulez quelque chose ou quand vous aviez besoin d’aide, est-ce que vous regardiez et utilisiez des gestes ou des sons pour attirer l’attention de l’autre personne ? ",
+"Lorsque vous aviez 4-5 ans, est-ce que vous montriez une gamme variée d’expressions sur votre visage pour exprimer la joie, la colère, la surprise, le plaisir, la tristesse, l’angoisse, le dépit, etc. ?",
+"Lorsque vous aviez 4-5 ans, est-ce qu’il vous arrivait de vous joindre spontanément a un groupe d’enfants et d’imiter leurs actions (jeu socialement interactif) ?",
+"Lorsque vous aviez 4-5 ans, est-ce que vous paraissiez intéressé à d’autres enfants qui avaient approximativement le même âge que vous, que vous ne connaissiez pas ?",
+"Lorsque vous aviez 4-5 ans, est-ce que vous répondiez positivement quand un autre enfant s’approchait de vous (par exemple : échange d’objets, de regard, de sourire) ?",
+"Lorsque vous aviez 4-5 ans et qu’une personne entrait dans la pièce où vous vous trouviez et qu’elle commençait à vous parler sans vous avoir appelé par votre nom, est-ce que vous la regardiez et étiez-vous attentif à elle ?",
+"Lorsque vous aviez 4-5 ans, est-ce qu’il vous arrivait de jouer des jeux de rôle avec un autre enfant, de manière à ce que vous compreniez tous les deux le rôle joué par l’autre (par exemple : faire rouler les voitures, les arrêter pour chercher de l’essence et puis leur faire faire la course) ?",
+"Lorsque vous aviez 4-5 ans, est-ce que vous vous joigniez à un groupe d’enfants pour participer à des jeux qui nécessitaient votre coopération avec le groupe (exemple : cache-cache ou le jeu de ballon) ?",
+"Lorsque vous aviez 4-5 ans, vous arrivait-il de faire semblant de faire quelque chose (par exemple : faire semblant de faire rouler une voiture sur la route en imitant le son du moteur, vous déguiser, donner à manger à une poupée, faire un gâteau) ?",
+"Lorsque vous aviez 4-5 ans, est-ce qu’il vous arrivait d’utiliser des gestes, autres qu’indiquer du doigt ou de tirer la main de quelqu’un pour faire comprendre ce que vous vouliez, lors d’un échange avec une autre personne ?",
+"Lorsque vous aviez 4-5 ans, est-ce que vous hochiez la tête pour dire OUI ?",
+"Lorsque vous aviez 4-5 ans, est-ce qu’il vous arrivait de secouer la tête pour dire NON ?",
+//AQ
+"Je préfère réaliser des activités avec d’autres personnes plutôt que seul(e).",
+"Je préfère tout faire continuellement de la même manière.",
+"Quand j’essaye d’imaginer quelque chose, il est très facile de m’en représenter une image mentalement.",
+"Je suis fréquemment tellement absorbé(e) par une chose que je perds tout le reste de vue.",
+"Mon attention est souvent attirée par des bruits discrets que les autres ne remarquent pas.",
+"Je fais habituellement attention aux numéros de plaques d’immatriculation ou à d’autres types d’informations de ce genre.",
+"Les gens me disent souvent que ce que j’ai dit était impoli, même quand je pense moi que c’était poli.",
+"Quand je lis une histoire, je peux facilement imaginer à quoi les personnages pourraient ressembler.",
+"Je suis fasciné(e) par les dates.",
+"Au sein d’un groupe, je peux facilement suivre les conversations de plusieurs personnes à la fois.",
+"Je trouve les situations de la vie en société faciles.",
+"J’ai tendance à remarquer certains détails que les autres ne voient pas.",
+"Je préfèrerais aller dans une bibliothèque plutôt qu’à une fête.",
+"Je trouve facile d’inventer des histoires.",
+"Je suis plus facilement attiré(e) par les gens que par les objets.",
+"J’ai tendance à avoir des centres d’intérêt très importants.  Je me tracasse lorsque je ne peux m’y consacrer.",
+"J’apprécie le bavardage en société.",
+"Quand je parle, il n’est pas toujours facile pour les autres de placer un mot.",
+"Je suis fasciné(e) par les chiffres.",
+"Quand je lis une histoire, je trouve qu’il est difficile de me représenter les intentions des personnages.",
+"Je n’aime pas particulièrement lire des romans.",
+"Je trouve qu’il est difficile de se faire de nouveaux amis.",
+"Je remarque sans cesse des schémas réguliers dans les choses qui m’entourent.",
+"Je préfèrerais aller au théâtre qu’au musée.",
+"Cela ne me dérange pas si mes habitudes quotidiennes sont perturbées.",
+"Je remarque souvent que je ne sais pas comment entretenir une conversation.",
+"Je trouve qu’il est facile de « lire entre les lignes » lorsque quelqu’un me parle.",
+"Je me concentre habituellement plus sur l’ensemble d’une image que sur les petits détails de celle-ci.",
+"Je ne suis pas très doué(e) pour me souvenir des numéros de téléphone.",
+"Je ne remarque habituellement pas les petits changements dans une situation ou dans l’apparence de quelqu’un.",
+"Je sais m’en rendre compte quand mon interlocuteur s’ennuie.",
+"Je trouve qu’il est facile de faire plus d’une chose à la fois.",
+"Quand je parle au téléphone, je ne suis pas sûr(e) de savoir quand c’est à mon tour de parler.",
+"J’aime faire les choses de manière spontanée.",
+"Je suis souvent le(la) dernier(ère) à comprendre le sens d’une blague.",
+"Je trouve qu’il est facile de décoder ce que les autres pensent ou ressentent juste en regardant leur visage.",
+"Si je suis interrompu(e), je peux facilement revenir à ce que j’étais en train de faire.",
+"Je suis doué(e) pour le bavardage en société.",
+"Les gens me disent souvent que répète continuellement les mêmes choses.",
+"Quand j’étais enfant, j’aimais habituellement jouer à des jeux de rôle avec les autres.",
+"J’aime collectionner des informations sur des catégories de choses (types de voitures, d’oiseaux, de trains, de plantes, ...).",
+"Je trouve qu’il est difficile de s’imaginer dans la peau d’un autre.",
+"J’aime planifier avec soin toute activité à laquelle je participe.",
+"J’aime les événements sociaux.",
+"Je trouve qu’il est difficile de décoder les intentions des autres.",
+"Les nouvelles situations me rendent anxieux(se).",
+"J’aime rencontrer de nouvelles personnes.",
+"Je suis une personne qui a le sens de la diplomatie.",
+"Je ne suis pas très doué(e) pour me souvenir des dates de naissance des gens.",
+"Je trouve qu’il est très facile de jouer à des jeux de rôle avec des enfants.",
+//EQ
+"Je remarque facilement si quelqu’un d’autre souhaite prendre part à la conversation.",
+"Je trouve difficile d’expliquer aux autres des choses que je comprends facilement si eux ne les comprennent pas du premier coup.",
+"J’apprécie vraiment de prendre soin des autres.",
+"Je trouve difficile de savoir quoi faire en société.",
+"Souvent on me dit que je suis allé(e) trop loin pour défendre mon opinion dans une discussion.",
+"Ça ne me gêne pas d’arriver en retard à un rendez-vous avec un(e) ami(e).",
+"Les relations amicales et sentimentales sont vraiment trop compliquées, donc j’ai tendance à ne pas m’en soucier.",
+"J’ai souvent du mal à juger si quelque chose est grossier ou poli.",
+"Au cours d’une conversation, j’ai tendance à me concentrer sur mes propres idées plutôt que sur ce que peut penser la personne qui m’écoute.",
+"Quand j’étais enfant, j’aimais découper des verres de terre pour voir ce qu’il se passait.",
+"Je comprends vite si une personne dit quelque chose mais en pense une autre.",
+"Il m’est difficile de comprendre pourquoi certaines choses affectent autant les gens.",
+"Je trouve facile de me mettre à la place des autres.",
+"Je suis doué(e) pour prédire ce que quelqu’un pourrait ressentir.",
+"Je repère facilement si dans un groupe quelqu’un se sent mal à l’aise ou embarrassé.",
+"Si je dis quelque chose qui offense quelqu’un, je pense que c’est son problème et non le mien.",
+"Si quelqu’un me demande si j’aime sa coupe de cheveux, je réponds honnêtement, même si elle ne me plaît pas.",
+"Je ne me rends pas toujours compte pourquoi quelqu’un devrait se sentir offensé par une remarque.",
+"Ça ne me bouleverse pas vraiment de voir quelqu’un pleurer.",
+"Je suis très direct(e), ce que les gens prennent souvent pour de l’impolitesse, alors que ce n’est pas mon intention.",
+"Je n’ai pas tendance à considérer les situations sociales comme déroutantes.",
+"On me dit que je suis doué(e) pour comprendre ce que les gens ressentent et pensent.",
+"Lorsque je parle aux gens, j’ai tendance à parler de leurs propres expériences plutôt que des miennes.",
+"Je suis bouleversé(e) lorsque je vois un animal souffrir.",
+"Je suis capable de prendre des décisions sans être influencé(e) par les sentiments des gens.",
+"Je remarque facilement si quelqu’un est intéressé ou ennuyé par ce que je dis.",
+"Je suis bouleversé(e) quand je vois des gens souffrir aux informations.",
+"Généralement, mes amis me parlent de leurs problèmes car ils disent que je suis très compréhensif(ve).",
+"Je peux sentir quand je dérange quelqu’un, même si la personne ne me le dit pas.",
+"Souvent les gens me disent que je suis allé(e) trop loin en les taquinant.",
+"On me dit souvent que je suis insensible, mais je ne vois pas toujours pourquoi.",
+"Si je vois une personne étrangère dans un groupe, je considère que c’est à elle de faire l’effort de s’intégrer.",
+"En général, je reste émotionnellement détaché(e) lorsque je regarde un film.",
+"Je peux voir rapidement et intuitivement comment une personne se sent.",
+"Je peux facilement déterminer de quoi une personne voudrait parler.",
+"Je peux dire si quelqu’un cache ses véritables émotions.",
+"Je n’évalue pas sciemment les règles en jeu dans les situations sociales.",
+"Je suis doué(e) pour prédire ce qu’une personne va faire.",
+"J’ai tendance à être impliqué(e) émotionnellement dans les problèmes de mes amis.",
+"Généralement, je peux comprendre le point de vue de mon interlocuteur, même si je ne suis pas d’accord."
+];
+
+// Scales and Critical Items
+scales=[
+	[
+		// Code, Scale Name, Scale Description
+		["SCQ","SCQ","Social Communication Questionnaire", 15],
+		//8 10 11 23 24 25 26 27 28 29 30 32 33 35 36
+		// True questions
+		[3,4,5,6,7,8,12,13,14,15,16,17,18,19,20],
+		// False questions
+		[2,9,4,10,11,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]
+	],[
+		["AQ","AQ","Quotient du Spectre Autistique", 32],
+		//7 12 13 14 15 16 17 18
+		[42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86],
+		[41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90]
+	],[
+		["EQ","EQ","Quotient Emphatique", -30],
+		//7 12 13 14 15 16 17 18
+		[91,93,101,103,104,105,106,111,112,113,114,116,117,118,119,124,125,126,127,128,129,130],
+		[92,94,95,96,97,98,99,100,102,107,108,109,110,115,120,121,122,123]
+	],[
+		// Code, Scale Name, Scale Description
+		[,"(ADI) A","Domaine des Interactions Sociales Réciproques", 5],
+		//8 10 11 23 24 25 26 27 28 29 30 32 33 35 36
+		// True questions
+		[8],
+		// False questions
+		[10,11,23,24,25,26,27,28,29,30,32,33,35,36]
+	],[
+		[,"(ADI) B","Domaine de la Communication", 4],
+		//2 3 4 5 6 9 21 22 31 37 38 39 40
+		[3,4,5,6],
+		[2,9,21,22,31,37,38,39,40]
+	],[
+		[,"(ADI) C","Domaine des Comportements Restreints, Répétitifs et Stéréotypés", 2],
+		//7 12 13 14 15 16 17 18
+		[7,12,13,14,15,16,17,18],
+		[]
+	],[
+		// Code, Scale Name, Scale Description
+		[,"(ADI) A1","Echec a utiliser le comportement non verbal pour reguler les interactions sociales"],
+		//8 10 11 23 24 25 26 27 28 29 30 32 33 35 36
+		// True questions
+		[],
+		// False questions
+		[23,24,30]
+	],[
+		// Code, Scale Name, Scale Description
+		[,"(ADI) A2","Echec de developpement de relations avec les pairs"],
+		//8 10 11 23 24 25 26 27 28 29 30 32 33 35 36
+		// True questions
+		[],
+		// False questions
+		[32,33,35]
+	],[
+		// Code, Scale Name, Scale Description
+		[,"(ADI) A3","Manque de partage de la joie"],
+		//8 10 11 23 24 25 26 27 28 29 30 32 33 35 36
+		// True questions
+		[],
+		// False questions
+		[25,26,27]
+	],[
+		// Code, Scale Name, Scale Description
+		[,"(ADI) A4","Manque de reciprocité socioemotionelle"],
+		//8 10 11 23 24 25 26 27 28 29 30 32 33 35 36
+		// True questions
+		[8],
+		// False questions
+		[11,28,29,36]
+	],[
+		[,"(ADI) B1","Absence ou delay dans le language parlé et echec de compensation par le geste"],
+		//2 3 4 5 6 9 21 22 31 37 38 39 40
+		[],
+		[22,38,39,40]
+	],[
+		[,"(ADI) B2(V)","Echec relation a innition et a soutenir une conversation interpersonelle"],
+		//2 3 4 5 6 9 21 22 31 37 38 39 40
+		[],
+		[2,9]
+	],[
+		[,"(ADI) B3(V)","Parlé stéréotypé, répétitif ou idiosyncrasique"],
+		//2 3 4 5 6 9 21 22 31 37 38 39 40
+		[3,4,5,6],
+		[]
+	],[
+		[,"(ADI) B4","Manque de jeu de role ou imaginitf spontané varié"],
+		//2 3 4 5 6 9 21 22 31 37 38 39 40
+		[],
+		[21,31,37]
+	],[
+		[,"(ADI) C1","Centre d'interets circoncrits"],
+		//7 12 13 14 15 16 17 18
+		[13,15],
+		[]
+	],[
+		[,"(ADI) C2","Adderance compulsive a des routines ou ritiels nonfonctionnels"],
+		//7 12 13 14 15 16 17 18
+		[7,12],
+		[]
+	],[
+		[,"(ADI) C3","Comportements moteur retetitifs et stéréotypés"],
+		//7 12 13 14 15 16 17 18
+		[17,18],
+		[]
+	],[
+		[,"(ADI) C4","Preocupation avec une partie d'un objet ou un element non fonction d'un materiel"],
+		//7 12 13 14 15 16 17 18
+		[14,16],
+		[]
+	],[
+		["AAAA","(AAA) A","Social"],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		/* EQ
+		[91,93,101,103,104,106,111,112,113,114,116,117,118,119,124,125,126,127,128,129,130],
+		[92,94,95,96,97,98,99,100,102,107,108,109,110,115,120,121,122,123]*/
+		//101,103,104,105,111,112,118,119,124,126,127,128,129
+		[60,62,75,85,94,96,97,102,109,115,121,122,123],
+		[41,50,51,55,67,76,84,101,103,104,105,111,112,118,119,124,126,127,128,129]
+	],[
+		["AAAB","(AAA) B","Obsessions"],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		[42,44,45,46,49,52,56,59,63,81,95],
+		[65,68,70,80,130]
+	],[
+		["AAAC","(AAA) C","Communication"],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		//91,106,113,116,125
+		//98,99,107,108,110,120
+		[47,79,66,73,98,99,107,108,110,120],
+		[57,71,78,88,91,106,113,116,125]
+	],[
+		["AAAD","(AAA) D","Imagination"],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		[61,82],
+		[54,64,80,90]
+	],[
+		[,"(AAA) A2","Incapacité de nouer des relations adaptées au stade du développement."],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		/* EQ
+		[91,93,101,103,104,106,111,112,113,114,116,117,118,119,124,125,126,127,128,129,130],
+		[92,94,95,96,97,98,99,100,102,107,108,109,110,115,120,121,122,123]*/
+		//[60,62,75,85,101,103,104,105,111,112,118,119,124,126,127,128,129],
+		//[41,50,51,55,67,76,84,94,96,97,102,109,115,121,122,123]
+		[41,62,97],
+		[55,84]
+	],[
+		[,"(AAA) A4","Manque de réciprocité socio-émotionnelle (c.à.d. ne sait pas comment réconforter quelqu'un, et/ou manque d'empathie). "],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		/* EQ
+		[91,93,101,103,104,106,111,112,113,114,116,117,118,119,124,125,126,127,128,129,130],
+		[92,94,95,96,97,98,99,100,102,107,108,109,110,115,120,121,122,123]*/
+		[96,102,109,115,121,122,123],
+		[105,111,118,119,124,129],
+	],[
+		[,"(AAA) A5","Difficultés à comprendre les situations sociales et les pensées et sentiments d'autres personnes. "],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		/* EQ
+		[91,93,101,103,104,106,111,112,113,114,116,117,118,119,124,125,126,127,128,129,130],
+		[92,94,95,96,97,98,99,100,102,107,108,109,110,115,120,121,122,123]*/
+		[60,75,85,94],
+		[50,51,67,76,101,103,104,111,112,126,127,128]
+	],[
+		[,"(AAA) B1","Attirance marquée par un ou plusieurs centres d’intérêt, limités et stéréotypés, avec un contenu ou une intensité hors norme."],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		[44,56,81],
+		[]
+	],[
+		[,"(AAA) B2","Attachement apparemment inflexible à des routines ou rituels spécifiques non fonctionnels."],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		[42],
+		[65]
+	],[
+		[,"(AAA) B4","Focalisation de l'attention sur des parties d'objets/systèmes. "],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		[45,46,49,52,59,63],
+		[68,70]
+	],[
+		[,"(AAA) B5","Tendance à percevoir les problèmes (par ex. politiques ou moraux) en noir et blanc, plutôt que de prendre en compte différentes perspectives d'une manière flexible."],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		[95],
+		[130]
+	],[
+		[,"(AAA) C1","Tendance à ramener la conversation sur soi-même ou sur son propre sujet de conversation."],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		//91,106,113,116,125
+		//98,99,107,108,110,120
+		[79,99],
+		[91,113]
+	],[
+		[,"(AAA) C2","Trouble marqué de la capacité à initier et suivre une conversation avec d'autres personnes. Ne voit pas l'interêt d'un contact social superficiel, des politesses, ou de passer le temps avec d'autres s'il n'y a pas un but de discussion/débat clair ou une activité claire."],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		//91,106,113,116,125
+		//98,99,107,108,110,120
+		[47,66,73],
+		[78,88,91,125]
+	],[
+		[,"(AAA) C4","Incapacité de se rendre compte si l'auditeur est interessé ou s'ennuie. Même si on a dit à la personne de ne pas parler trop longtemps du sujet qui l'obsède particulièrement, cette difficulté peut s'avérer évidente si d'autres sujets sont abordés. "],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		//91,106,113,116,125
+		//98,99,107,108,110,120
+		[],
+		[71,116]
+	],[
+		[,"(AAA) C5","Tendance fréquente à dire des choses sans prendre en considération l'impact émotionnel sur l'auditeur (faux pas)."],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		//91,106,113,116,125
+		//98,99,107,108,110,120
+		[47,98,107,108,110,120],
+		[88,106]
+	],[
+		[,"(AAA) D1","Manque de jeux de faire semblant variés, spontanés, adaptés au stade du développement."],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		[82],
+		[80,90]
+	],[
+		[,"(AAA) D2","Incapacité de raconter, d'écrire ou d'inventer de la fiction sans préparation ou plagiat."],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		[],
+		[54]
+	],[
+		[,"(AAA) D3","Soit manque d'interêt pour la fiction (écrite ou non) adapté au stade du développement soit interêt pour la fiction limité à ce qui peut avoir un fondement possible dans la réalité (par ex. science-fiction, histoire, aspects techniques des films)."],
+		//True : 42,44,45,46,47,49,52,53,56,58,59,60,61,62,63,66,73,75,79,81,82,83,85,86
+		//False : 41,43,48,50,51,54,55,57,64,65,67,68,69,70,71,72,74,76,77,78,80,84,87,88,89,90
+		[61],
+		[64]
+	]
+];
+
+// Append text to the DOM
+function append_text(txt)
+{
+	var docbody=document.getElementsByTagName("body")[0];
+	docbody.appendChild(document.createTextNode(txt)); 
+	docbody.appendChild(document.createElement("br")); 
+}
+
+// Append row data to a row
+function append_td(row,txt)
+{
+	var tdata=document.createElement("td");
+	tdata.appendChild(document.createTextNode(txt));
+	row.appendChild(tdata);
+}
+
+// Append a row of data to a table
+function append_tr(table)
+{
+	var trow=document.createElement("tr");
+	for(var i=1;i< arguments.length;++i) {
+		append_td(trow,arguments[i]);
+	}
+	table.appendChild(trow);
+}
+
+// Append a table to the DOM and return a reference to it
+// Arguments are table headings (variable length)
+function make_table()
+{
+	var docbody,table,thead,tbody,trow,i;
+
+	docbody=document.getElementsByTagName("body")[0];
+	table=document.createElement("table");
+	table.setAttribute("border","5");
+	thead=document.createElement("thead");
+	table.appendChild(thead);
+	tbody=document.createElement("tbody");
+	table.appendChild(tbody);
+	docbody.appendChild(table);
+
+	trow=document.createElement("tr");
+	for(i=0;i< arguments.length;++i) {
+		append_td(trow,arguments[i]);
+	}
+	thead.appendChild(trow);
+	
+	return tbody;
+}
+
+longform=true;	// All questions or first 370
+gender=0;		// 0==male, 1==female
+ans=[]; 		// Answers to questions: [T,F,?]
+
+// Score the test
+function score()
+{
+	// Change mouse pointer to wait indicator
+	// This does not seem to work because JavaScript blocks the UI message pump :(
+	document.body.style.cursor="wait";
+
+	// Variable declarations
+	var i,j,tscale,q,n,s,rp;
+	var k,rawscore,kscore,tscore,percent;
+	var t_cnt,f_cnt,cs_cnt,pe;
+
+	// Make the scale and critical item tables
+	var scale_table=make_table("Echelle","Description","Score","% Répondu","Cutoff");
+	var ci_table=make_table("Echelle","Description","Question","Réponse","Question");
+
+	// Count the number of True, False, and Can't Say answers
+	n=longform?questions.length:371;
+	t_cnt=0;
+	f_cnt=0;
+	cs_cnt=0;
+	for(q=1;q< n;++q) {
+		switch(ans[q]) {
+			case "T":
+				++t_cnt;
+				break;
+			case "F":
+				++f_cnt;
+				break;
+			default:
+				++cs_cnt;
+				break;
+		}
+	}
+	--q;
+
+	// Add T/F/? stats to scale table
+	append_tr(scale_table,"Oui"," ",t_cnt,(t_cnt*100/q).toPrecision(3));
+	append_tr(scale_table,"Non"," ",f_cnt,(f_cnt*100/q).toPrecision(3));
+	append_tr(scale_table,"?"," ",cs_cnt,(cs_cnt*100/q).toPrecision(3));
+
+	// Score the scales and critical items
+	k=0;
+	pe=0;
+	// Iterate all the scales
+	for(i=0;i< scales.length;++i) {
+		n=0;
+		rawscore=0;
+		// Iterate the True question list
+		for(j=0;j< scales[i][1].length;++j) {
+			// Get the question number
+			q=scales[i][1][j];
+			// Act upon the answer to that question
+			switch(ans[q]) {
+				// True
+				case "1":
+				case "2":
+				case "O":
+					// Increment the answer count
+					++n;
+					// Increment raw score only if True
+					if(q>=91 && ans[q]==="1") {
+						rawscore=rawscore+2;
+					}else{
+						++rawscore;
+					}
+					// If this is a critcal item, add it to the critical items table
+					if(true) {
+						append_tr(ci_table,scales[i][0][1],scales[i][0][2],q,"Oui",questions[q]);
+					}
+					break;
+				case "3":
+				case "4":
+				case "N":
+					// Increment the answer count
+					++n;
+					break;
+			}
+		}
+		// Iterate the False question list (same procedure as True above)
+		for(j=0;j< scales[i][2].length;++j) {
+			q=scales[i][2][j];
+			switch(ans[q]) {
+				case "3":
+				case "4":
+				case "N":
+					++n;
+					if(q>=91 && ans[q]==="4") {
+						rawscore=rawscore+2;
+					}else{
+						++rawscore;
+					}
+					if(true) {
+						append_tr(ci_table,scales[i][0][1],scales[i][0][2],q,"Non",questions[q]);
+					}
+					break;
+				case "1":
+				case "2":
+				case "O":
+					++n;
+					break;
+			}
+		}
+		// Add scale results to scale table
+		// T score table must be defined, otherwise this is a critical item
+		if(true) {
+			// Capture K for future use
+			// Calculate percent answered
+			percent=n*100/(scales[i][1].length+j);
+			// Append results to score table
+			dispscore=rawscore;
+			if(rawscore>=scales[i][0][3] && scales[i][0][3]>0) {
+				dispscore=rawscore+" !!";
+			}else if(rawscore<=(-scales[i][0][3]) && scales[i][0][3]<0) {
+				dispscore=rawscore+" !!";
+			}
+			if(scales[i][0][3]!==undefined){
+				if(scales[i][0][3]>0) disp_cutoff=">"+scales[i][0][3];
+				else disp_cutoff="<"+(-scales[i][0][3]);
+				append_tr(scale_table,scales[i][0][1],scales[i][0][2],dispscore,percent.toPrecision(3),disp_cutoff);
+			}else{
+				append_tr(scale_table,scales[i][0][1],scales[i][0][2],rawscore,percent.toPrecision(3));
+			}
+		}
+	}
+	// Convert profile elevation sum to average (divide by number of scales)
+	//pe/=8;
+	// Show profile elevation in page
+	//append_text("Profile Elevation: "+pe.toPrecision(3));
+
+	// Show an answer summary to allow for copy & paste of answers
+	append_text("Résumé des Réponses");
+	s="";
+	for(q=1;q< questions.length;++q) {
+		s+=ans[q];
+		if(s.length>=75) {
+			append_text(s);
+			s="";
+		}
+	}
+	if(s.length) { append_text(s); }
+
+	// Restore mouse pointer
+	document.body.style.cursor="auto";
+}
+
+// Read status of radio button group and return value of selected button
+function radio_value(rb)
+{
+	if(!rb) { return; }
+	for(var i=0;i< rb.length;i++) {
+		if(rb[i].checked===true) {
+			return rb[i].value;
+		}
+	}
+}
+
+// Fill the answer array with radio button state and score
+function score_rb(form)
+{
+	ans=[undefined];
+	for(var i=1;i< questions.length;++i) {
+		var rbv=radio_value(form.elements["Q"+i]);
+		if(rbv) {
+			ans.push(rbv);
+		} else {
+			ans.push("?");
+		}
+	}
+	score();
+}
+
+// Fill the answer array from text and score
+function score_text(anstext)
+{
+	//alert("Score Text: "+anstext.length);
+	ans=[undefined];
+	var n=1;
+	// Check each character of text
+	for(var i=0;i< anstext.length;++i) {
+		// Ignore control characters (0 to 31) and space (32)
+		if(anstext.charCodeAt(i)>32) {
+			// Convert character to 'T','F' or '?'
+			var a;
+			switch(anstext.charAt(i)) {
+				case "1":
+				case "2":
+				case "3":
+				case "4":
+					a=anstext.charAt(i);
+					break;
+				case "T":
+				case "t":
+				case "Y":
+				case "y":
+				case "X":
+				case "x":
+				case "O":
+				case "o":
+					a="O";
+					break;
+				case "F":
+				case "f":
+				case "N":
+				case "n":
+					a="N";
+					break;
+				case "?":
+				case "-":
+					a="?";
+					break;
+				default:
+					a=undefined;
+					break;
+			}
+			// Save valid answer in answer array
+			if(a) {
+				ans.push(a);
+				++n;
+			}
+		}
+	}
+	alert((n-1)+" reponses recopié");
+	// If too few valid characters where processed, fill the remaining answers with '?'
+	for(;n< questions.length;++n) { ans.push("?"); }
+	// Score it
+	score();
+}
+
+// Set the test gender - called by onclick() event in the form
+function set_gender(g)
+{
+	gender=g;
+	//alert("gender: "+g);
+}
+
+// Set the test length - called by onclick() event in the form
+function use_long_form(lf)
+{
+	longform=lf;
+	//longformdiv.style.visibility=longform?"visible":"hidden";
+	longformdiv.style.display=longform?"inline":"none";
+	//alert("longform: "+longform);
+}
+
+// Write a single question to the HTML page
+function doc_write_question(name,text)
+{
+	document.write("<tr><td>"+text+"</td>");
+	document.write("<td><input type=\"radio\" name="+name+" value=\"O\">Oui<br>");
+	document.write("<input type=\"radio\" name="+name+" value=\"N\">Non</td></tr>");
+}
+function doc_write_question_b(name,text)
+{
+	document.write("<tr><td>"+text+"</td>");
+	document.write("<td><td><input type=\"radio\" name="+name+" value=\"1\">Tout à fait d’accord</td>");
+	document.write("<td><input type=\"radio\" name="+name+" value=\"2\">Plutôt d’accord</td>");
+	document.write("<td><input type=\"radio\" name="+name+" value=\"3\">Plutôt pas d’accord</td>");
+	document.write("<td><input type=\"radio\" name="+name+" value=\"4\">Pas du tout d’accord</td></td></tr>");
+}
+
+// Write all question radio buttons and text to the HTML page - called from the HTML
+function doc_write_all_questions()
+{
+	document.write("<table border=\"5\"><thead><tr><td>Question</td><td>Oui/Non</td></tr></thead><tbody>");
+	for(var i=1; i < 41; ++i) {
+		doc_write_question("Q"+i,i+". "+questions[i]);
+	}
+	for(var i=41; i < questions.length; ++i) {
+		doc_write_question_b("Q"+i,i+". "+questions[i]);
+	}
+	document.write("<\/tbody><\/table><\/div><input type=\"button\" value=\"Score\" onclick=\"score_rb(document.forms.questions);\">");
+}
+
+</script>
+
+<h1>QUESTIONNAIRE DE DÉPISTAGE DES TROUBLES
+ENVAHISSANTS DU DÉVELOPPEMENT SANS DÉFICIENCE
+INTELLECTUELLE (version adulte, auto-administrée, d’après Catherine
+Lord et al., 1999. Traduction et élaboration par Ridha Joober, Violaine De
+Kimpe et Laurent Mottron, et l’équipe de la Clinique spécialisée des TED de
+l’Hôpital Rivière-des-Prairies).
+</h1>
+----
+<h1>LE QUOTIENT DU SPECTRE AUTISTIQUE (QA)
+(version adulte, auto-administrée, d’après Baron-Cohen, Wheelwright, Skinner, Martin and Clubey, 2001. Adaptation française par Stéphanie Braun et C. Kempenaers, Free University of Brussels.)
+</h1>
+----
+<h1>
+THE CAMBRIDGE BEHAVIOUR SCALE
+(version adulte, auto-administrée, d'après Baron-Cohen & Wheelwright, 2004. Adaptation française par L. Weiner et J. Henry, 2007)
+</h1>
+----
+<h1>
+ADULT ASPERGER  ASSESSMENT (AAA)
+(Adaptation française par L. Weiner, Hôpitaux Universitaires de Strasbourg, octobre 2007)
+</h1>
+
+<form name="questions" action="#"><p>
+
+<script type="text/javascript">doc_write_all_questions();</script>
+
+<br><br>
+
+</p></form>
+
+
+<form name="anstext" action=""><p>
+
+<textarea id="ata" cols=76 rows=9></textarea><br>
+<input type="button" value="Scorer des réponses recopié" onclick="score_text(document.forms.anstext.ata.value);">
+
+<br><br>
+
+</p></form>
+
+
+</body>
