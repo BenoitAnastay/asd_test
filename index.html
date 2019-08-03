@@ -499,10 +499,14 @@ function score()
 	cs_cnt=0;
 	for(q=1;q< n;++q) {
 		switch(ans[q]) {
-			case "T":
+			case "1":
+			case "2":
+			case "O":
 				++t_cnt;
 				break;
-			case "F":
+			case "3":
+			case "4":
+			case "N":
 				++f_cnt;
 				break;
 			default:
